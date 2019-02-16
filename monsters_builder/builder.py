@@ -45,25 +45,37 @@ if __name__ == "__main__":
 
     all_monsters = dict()
 
-    # Do a dry run, to get infobox version names
-    print("Determining infobox versions...")
+    # # Do a dry run, to get infobox version names
+    # print("Determining infobox versions...")
+    # for monster_name in wiki_text:
+    #     json_data = wiki_text[monster_name]
+    #     builder = monster_builder.BuildMonster(monster_name, json_data, None)
+    #     # unique_name: version_number, wiki_text
+    #     versions = builder.find_monster_unique_name()
+    #
+    #     for entry in versions:
+    #         for key in entry:
+    #             all_monsters[key] = entry[key]
+
+    # Do a dry run, to get infobox version ids
+    print("Determining infobox ids...")
     for monster_name in wiki_text:
         json_data = wiki_text[monster_name]
         builder = monster_builder.BuildMonster(monster_name, json_data, None)
         # unique_name: version_number, wiki_text
-        versions = builder.find_monster()
+        ids = builder.find_monster_unique_ids()
 
-        for entry in versions:
-            for key in entry:
-                all_monsters[key] = entry[key]
+        # for entry in ids:
+        #     for key in entry:
+        #         all_monsters[key] = entry[key]
 
-    for monster_name in all_monsters:
-        version_number = all_monsters[monster_name][0]
-        json_data = all_monsters[monster_name][1]
-
-        # Initialize the BuildItem class
-        builder = monster_builder.BuildMonster(monster_name,
-                                               json_data,
-                                               version_number)
-        # Start the build item population function
-        builder.populate()
+    # for monster_name in all_monsters:
+    #     version_number = all_monsters[monster_name][0]
+    #     json_data = all_monsters[monster_name][1]
+    #
+    #     # Initialize the BuildItem class
+    #     builder = monster_builder.BuildMonster(monster_name,
+    #                                            json_data,
+    #                                            version_number)
+    #     # Start the build item population function
+    #     builder.populate()

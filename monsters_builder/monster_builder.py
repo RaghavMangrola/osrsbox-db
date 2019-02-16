@@ -46,7 +46,7 @@ class BuildMonster:
 
         # If a page does not have a wiki page, it may be given a status number
 
-    def find_monster(self):
+    def find_monster_unique_name(self):
         # Extract the infobox for the monster, return in not available
         has_infobox = self.extract_infobox()
         if not has_infobox:
@@ -74,6 +74,31 @@ class BuildMonster:
         # The infobox is not versioned, generate default content
         if not versions:
             versions.append({self.monster_name: ["", self.json_data]})
+
+        return versions
+
+    def find_monster_unique_ids(self):
+        # Extract the infobox for the monster, return in not available
+        has_infobox = self.extract_infobox()
+        if not has_infobox:
+            return []
+
+        print(self.monster_name)
+        ids = list()  # id, wiki_name, version_name, version_number, wiki_text
+
+        versions = list()
+        versions.append("")
+        for version in range(1, 20):
+            version = str(version)
+            versions.append(version)
+
+        for version in versions:
+            try:
+                version_name = "id" + version
+                content = self.template.get(version_name).value.strip()
+                print(version_name, content)
+            except ValueError:
+                pass
 
         return versions
 
