@@ -43,12 +43,27 @@ if __name__ == "__main__":
     with open(extraction_path_wiki + "extract_page_text_monsters.json") as wiki_text_file:
         wiki_text = json.load(wiki_text_file)
 
-    # Start processing every item!
+    all_monsters = dict()
+
+    # Do a dry run, to get infobox version names
+    print("Determining infobox versions...")
     for monster_name in wiki_text:
         json_data = wiki_text[monster_name]
+        builder = monster_builder.BuildMonster(monster_name, json_data, None)
+        # unique_name: version_number, wiki_text
+        versions = builder.find_monster()
+
+        for entry in versions:
+            for key in entry:
+                all_monsters[key] = entry[key]
+
+    for monster_name in all_monsters:
+        version_number = all_monsters[monster_name][0]
+        json_data = all_monsters[monster_name][1]
+
         # Initialize the BuildItem class
         builder = monster_builder.BuildMonster(monster_name,
-                                               json_data)
+                                               json_data,
+                                               version_number)
         # Start the build item population function
-        builder.find_monster()
-        # builder.populate()
+        builder.populate()
